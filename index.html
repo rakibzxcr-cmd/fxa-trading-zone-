@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FX.A Trading Zone - Professional Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">FX</div>
+            <div class="logo-text">
+                <h1>FX.A TRADING ZONE</h1>
+                <span>SMC & Price Action Portal</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <button class="btn btn-outline" onclick="openModal('loginModal')"><i class="fas fa-sign-in-alt"></i> লগইন</button>
+            <button class="btn btn-gold" onclick="openModal('signupModal')"><i class="fas fa-user-plus"></i> সাইন আপ</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar Hub -->
+        <aside class="sidebar">
+            <div class="user-status-card">
+                <div class="user-avatar"><i class="fas fa-user"></i></div>
+                <div class="user-name" id="displayUsername">Guest Trader</div>
+                <div class="user-role">FX.A Member</div>
+            </div>
+
+            <div>
+                <div class="sidebar-section-title">Broker Platforms</div>
+                <div class="link-list">
+                    <a href="https://one.exnessonelink.com/a/929pyfpnpw" target="_blank" class="link-item">
+                        <span><i class="fas fa-chart-line"></i> Exness Account</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                    <a href="https://broker-qx.pro/sign-up/?lid=2343151" target="_blank" class="link-item">
+                        <span><i class="fas fa-bolt"></i> Quotex Account</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                    <a href="https://www.binance.com/referral/mystery-box/referral-dhamaka-2026/claim?ref=GRO_100017456_S2J55" target="_blank" class="link-item">
+                        <span><i class="fas fa-coins"></i> Binance Account</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <div class="sidebar-section-title">Social & Community</div>
+                <div class="link-list">
+                    <a href="https://t.me/rakibfxatrading" target="_blank" class="link-item">
+                        <span><i class="fab fa-telegram"></i> Telegram Channel</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                    <a href="https://t.me/FXATradingZoneBot" target="_blank" class="link-item">
+                        <span><i class="fas fa-robot"></i> Official VIP Bot</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                    <a href="https://t.me/sumaiyasimux" target="_blank" class="link-item">
+                        <span><i class="fas fa-headset"></i> Admin Support</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/19RpWwwZS1/" target="_blank" class="link-item">
+                        <span><i class="fab fa-facebook"></i> Facebook Page</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 9px;"></i>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <div class="hero-banner">
+                <h2>FX.A Trading Zone Portal</h2>
+                <p>Master Smart Money Concepts (SMC) & Price Action with professional setups and updates.</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">VIP Win Rate</div>
+                        <div class="value">95.4%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Active Traders</div>
+                        <div class="value">5,420+</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Daily Signals</div>
+                        <div class="value">10-15</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Creation Box -->
+            <div class="post-box">
+                <textarea id="postTextContent" placeholder="আপনার ট্রেড সেটাপ বা প্রফিট স্ক্রিনশট শেয়ার করুন..."></textarea>
+                <div class="post-actions">
+                    <label class="upload-btn-label">
+                        <i class="fas fa-image" style="color: var(--gold);"></i> ছবি/ভিডিও <input type="file" id="mediaInput" accept="image/*,video/*" style="display: none;" onchange="handleFileSelect(event)">
+                    </label>
+                    <button class="btn btn-gold" onclick="publishPost()">পোস্ট করুন</button>
+                </div>
+            </div>
+
+            <!-- Feed Stream -->
+            <div class="feed-stream" id="feedStreamContainer">
+                <div class="feed-card">
+                    <div class="feed-header">
+                        <div class="feed-user-avatar">RF</div>
+                        <div class="feed-user-info">
+                            <h4>RAKIB FX (Admin)</h4>
+                            <span>আজ, সকাল ৮:১৫</span>
+                        </div>
+                    </div>
+                    <div class="feed-text">
+                        🔥 গোল্ড (XAUUSD) বাই সেটাপ এসএমসি কনফার্মেশন সহ পারফেক্টলি হিট করেছে! আমাদের ভিআইপি বটের মাধ্যমে লাইভ সিগন্যাল পেতে যুক্ত থাকুন। ✨
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>মেম্বার লগইন</h3>
+                <button class="close-modal" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="form-group">
+                <label>জিমেইল এড্রেস</label>
+                <input type="email" id="loginEmail" placeholder="yourname@gmail.com">
+            </div>
+            <div class="form-group">
+                <label>পাসওয়ার্ড</label>
+                <input type="password" id="loginPassword" placeholder="••••••••">
+            </div>
+            <button class="btn btn-gold full-btn" onclick="handleLogin()">লগইন করুন</button>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal-overlay" id="signupModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>নতুন একাউন্ট তৈরি করুন</h3>
+                <button class="close-modal" onclick="closeModal('signupModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="form-group">
+                <label>আপনার নাম</label>
+                <input type="text" id="signupName" placeholder="Rakib FX">
+            </div>
+            <div class="form-group">
+                <label>জিমেইল এড্রেস</label>
+                <input type="email" id="signupEmail" placeholder="yourname@gmail.com">
+            </div>
+            <div class="form-group">
+                <label>পাসওয়ার্ড দিন</label>
+                <input type="password" id="signupPassword" placeholder="••••••••">
+            </div>
+            <button class="btn btn-gold full-btn" onclick="handleSignup()">রেজিস্ট্রেশন করুন</button>
+        </div>
+    </div>
+
+    <!-- AI Assistant Widget -->
+    <div class="ai-widget-container">
+        <div class="ai-chat-box" id="aiChatBox">
+            <div class="ai-chat-header">
+                <h4><i class="fas fa-robot"></i> FX.A অ্যাসিস্ট্যান্ট</h4>
+                <button class="close-modal" onclick="toggleAIChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="message bot">হ্যালো! আমি FX.A অ্যাসিস্ট্যান্ট। এক্সনেস একাউন্ট, ভিআইপি সিগন্যাল বা এডমিন সাপোর্ট সম্পর্কে যেকোনো কিছু আমাকে জিজ্ঞেস করতে পারেন!</div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" id="aiUserInput" placeholder="এখানে কিছু লিখুন..." onkeypress="handleAIPress(event)">
+                <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="ai-toggle-btn" onclick="toggleAIChat()"><i class="fas fa-comments"></i></button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+                               </html>

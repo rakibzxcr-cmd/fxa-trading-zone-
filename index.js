@@ -1,5 +1,3 @@
-// index.js
-// discord.js v14 | Node 18+ | Render keep-alive
 require('dotenv').config();
 const { Client, GatewayIntentBits, Partials, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } = require('discord.js');
 const express = require('express');
@@ -14,9 +12,8 @@ const client = new Client({
   partials: [Partials.Message, Partials.Channel, Partials.Reaction]
 });
 
-const pending = new Map(); // userId -> { links: [], messageId }
+const pending = new Map();
 
-// Keep-alive for Render free tier
 const app = express();
 app.get('/', (req, res) => res.send('Gallery Match Bot online'));
 app.get('/health', (req, res) => res.json({ status: 'online' }));
@@ -27,7 +24,6 @@ client.once(Events.ClientReady, () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
-// Star reaction → open styled menu
 client.on(Events.MessageReactionAdd, async (reaction, user) => {
   if (user.bot) return;
   if (reaction.partial) {
@@ -62,11 +58,9 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
       .setEmoji('🔗')
   );
 
-  const channel = reaction.message.channel;
-  await channel.send({ embeds: [embed], components: [row] });
+  await reaction.message.channel.send({ embeds: [embed], components: [row] });
 });
 
-// Match button → create big link + wait for 3 links
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isButton()) return;
   if (!interaction.customId.startsWith('match_')) return;
@@ -76,11 +70,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
     return interaction.reply({ content: 'This match is not for you.', ephemeral: true });
   }
 
-  const base = process.env.RENDER_EXTERNAL_URL || `https://${process.env.RENDER_SERVICE_NAME || 'your-bot'}.onrender.com`;
+  const base = process.env.RENDER_EXTERNAL_URL || `https://${process.env.RENDER_SERVICE_NAME || 'gallery-match'}.onrender.com`;
   const sessionId = `\( {Date.now()}_ \){Math.random().toString(36).slice(2, 10)}`;
   const bigLink = `\( {base}/gallery/ \){sessionId}?u=${interaction.user.id}`;
 
-  pending.set(interaction.user.id, { links: [], sessionId, messageId: null });
+  pending.set(interaction.user.id, { links: [], sessionId });
 
   const matchEmbed = new EmbedBuilder()
     .setColor(0xe94560)
@@ -95,7 +89,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
   await interaction.reply({ embeds: [matchEmbed] });
 });
 
-// Collect the three links
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
   const data = pending.get(message.author.id);
@@ -103,7 +96,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   const urlRegex = /https?:\/\/[^\s]+/gi;
   const found = message.content.match(urlRegex);
-  if (!found || found.length === 0) return;
+  if (!found) return;
 
   data.links.push(...found);
   pending.set(message.author.id, data);
@@ -129,7 +122,6 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
-// Simple gallery endpoint (placeholder – extend with real media proxy if needed)
 app.get('/gallery/:sessionId', (req, res) => {
   res.send(`
     <html>
@@ -144,7 +136,6 @@ app.get('/gallery/:sessionId', (req, res) => {
           <h1>GALLERY MIRROR</h1>
           <p>Session: ${req.params.sessionId}</p>
           <p>Target gallery stream ready.</p>
-          <p>Models will appear here once the three links are processed.</p>
         </div>
       </body>
     </html>

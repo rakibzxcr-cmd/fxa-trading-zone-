@@ -1,0 +1,17 @@
+{
+  "name": "gallery-match-bot",
+  "version": "1.0.0",
+  "description": "Star → Menu → Match → 3 Links → Gallery Mirror",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
+}
